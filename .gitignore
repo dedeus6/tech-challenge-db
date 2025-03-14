@@ -1,0 +1,22 @@
+# Ignorar a pasta de dependências e downloads do Terraform
+terraform/.terraform/
+
+# Ignorar arquivos de estado (contêm credenciais e configurações sensíveis)
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/*.tfstate
+terraform/*.tfstate.*
+
+# Ignorar arquivos de lock
+terraform/.terraform.lock.hcl
+
+# Ignorar planos de execução (arquivos binários gerados pelo `terraform plan`)
+terraform/*.tfplan
+
+# Ignorar variáveis sensíveis
+terraform/terraform.tfvars
+terraform/*.tfvars
+
+# Ignorar arquivos temporários e logs
+terraform/*.log
+terraform/crash.log

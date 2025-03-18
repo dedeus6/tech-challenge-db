@@ -35,11 +35,24 @@ jobs:
         with:
           terraform_version: 1.6.0
 
+      - name: Check if Lambda exists
+        id: check_lambda
+        run: |
+          if aws lambda get-function --function-name lambda-autenticacao --region us-east-1 > /dev/null 2>&1; then
+            echo "lambda_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "lambda_exists=false" >> $GITHUB_OUTPUT
+          fi   
+
       - name: Inicializar Terraform
         run: terraform init
 
       - name: Validar Terraform
         run: terraform validate
+
+      - name: Import Lambda if it exists
+        if: steps.check_lambda.outputs.lambda_exists == 'true'
+        run: terraform import aws_lambda_function.lambda-autenticacao lambda-autenticacao
 
       - name: Planejar Terraform
         run: terraform plan
